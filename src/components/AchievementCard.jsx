@@ -1,5 +1,6 @@
 import React from "react";
-import { Trophy, Award, Star, Flame, Sparkles, Users, ShieldCheck, ExternalLink, Calendar } from "lucide-react";
+import { Trophy, Award, Star, Flame, Sparkles, Users, ShieldCheck, ExternalLink, Calendar, Edit3, Trash2 } from "lucide-react";
+import { usePortfolio } from "../context/PortfolioContext";
 
 const iconMap = {
   Trophy: Trophy,
@@ -11,8 +12,9 @@ const iconMap = {
   ShieldCheck: ShieldCheck
 };
 
-export default function AchievementCard({ achievement }) {
+export default function AchievementCard({ achievement, onEdit }) {
   const IconComponent = iconMap[achievement.icon] || Trophy;
+  const { isEditMode, deleteAchievement } = usePortfolio();
 
   return (
     <div className={`glass-card rounded-2xl p-6 sm:p-7 relative overflow-hidden flex flex-col justify-between border transition-all duration-300 ${
@@ -92,6 +94,32 @@ export default function AchievementCard({ achievement }) {
             <span>View Project / Demo</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
+        </div>
+      )}
+
+      {/* In-Card Edit & Delete Actions for Edit Mode */}
+      {isEditMode && (
+        <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => onEdit && onEdit(achievement)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 transition-colors"
+          >
+            <Edit3 className="w-3.5 h-3.5" />
+            <span>Edit</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              if (window.confirm(`Delete achievement "${achievement.title}"?`)) {
+                deleteAchievement(achievement.id);
+              }
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 transition-colors"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+            <span>Delete</span>
+          </button>
         </div>
       )}
     </div>

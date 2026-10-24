@@ -67,6 +67,10 @@ export function PortfolioProvider({ children }) {
   }, [projects]);
 
   useEffect(() => {
+    localStorage.setItem(`${STORAGE_KEY}_achievements`, JSON.stringify(achievements));
+  }, [achievements]);
+
+  useEffect(() => {
     sessionStorage.setItem(EDIT_SESSION_KEY, isEditMode ? "true" : "false");
   }, [isEditMode]);
 
@@ -170,6 +174,25 @@ export function PortfolioProvider({ children }) {
     setExperience((prev) => prev.filter((exp) => exp.id !== expId));
   };
 
+  // --- Achievements management ---
+  const addAchievement = (newAch) => {
+    const achWithId = {
+      ...newAch,
+      id: newAch.id || `ach-${Date.now()}`
+    };
+    setAchievements((prev) => [achWithId, ...prev]);
+  };
+
+  const updateAchievement = (achId, updatedAch) => {
+    setAchievements((prev) =>
+      prev.map((ach) => (ach.id === achId ? { ...ach, ...updatedAch } : ach))
+    );
+  };
+
+  const deleteAchievement = (achId) => {
+    setAchievements((prev) => prev.filter((ach) => ach.id !== achId));
+  };
+
   // --- Profile Updates ---
   const updateProfile = (fields) => {
     setProfile((prev) => ({
@@ -215,6 +238,9 @@ export function PortfolioProvider({ children }) {
         projects,
         education,
         achievements,
+        addAchievement,
+        updateAchievement,
+        deleteAchievement,
         addSkill,
         deleteSkill,
         resetToDefaults

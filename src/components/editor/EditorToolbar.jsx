@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Edit3, Plus, Upload, Briefcase, RotateCcw, LogOut, CheckCircle } from "lucide-react";
+import { Edit3, Plus, Upload, Briefcase, Trophy, RotateCcw, LogOut, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePortfolio } from "../../context/PortfolioContext";
 import AddSkillModal from "./AddSkillModal";
 import AddCertificateModal from "./AddCertificateModal";
 import EditExperienceModal from "./EditExperienceModal";
+import EditAchievementModal from "./EditAchievementModal";
 
 export default function EditorToolbar() {
   const { isEditMode, exitEditMode, resetToDefaults } = usePortfolio();
@@ -12,13 +13,14 @@ export default function EditorToolbar() {
   const [skillModalOpen, setSkillModalOpen] = useState(false);
   const [certModalOpen, setCertModalOpen] = useState(false);
   const [expModalOpen, setExpModalOpen] = useState(false);
+  const [achModalOpen, setAchModalOpen] = useState(false);
 
   if (!isEditMode) return null;
 
   return (
     <>
       {/* Floating Bottom Admin Editor Bar */}
-      <aside aria-label="Portfolio Editor Controls" className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-2xl px-4 pointer-events-none">
+      <aside aria-label="Portfolio Editor Controls" className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-3xl px-4 pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -42,7 +44,7 @@ export default function EditorToolbar() {
               title="Add a technical skill"
             >
               <Plus className="w-3.5 h-3.5 text-violet-400" />
-              <span>Add Skill</span>
+              <span>Skill</span>
             </button>
 
             <button
@@ -51,7 +53,7 @@ export default function EditorToolbar() {
               title="Upload certificate photo"
             >
               <Upload className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Upload Certificate</span>
+              <span>Certificate</span>
             </button>
 
             <button
@@ -60,7 +62,16 @@ export default function EditorToolbar() {
               title="Add experience entry"
             >
               <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Add Experience</span>
+              <span>Experience</span>
+            </button>
+
+            <button
+              onClick={() => setAchModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-600/20 hover:bg-amber-600/30 text-amber-200 border border-amber-500/30 transition-all hover:scale-102"
+              title="Add achievement or award"
+            >
+              <Trophy className="w-3.5 h-3.5 text-amber-400" />
+              <span>Achievement</span>
             </button>
 
             <button
@@ -97,6 +108,11 @@ export default function EditorToolbar() {
       <EditExperienceModal
         isOpen={expModalOpen}
         onClose={() => setExpModalOpen(false)}
+      />
+
+      <EditAchievementModal
+        isOpen={achModalOpen}
+        onClose={() => setAchModalOpen(false)}
       />
     </>
   );

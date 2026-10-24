@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Award, Trophy, Star, Sparkles, Info, ExternalLink } from "lucide-react";
+import { Award, Trophy, Star, Sparkles, Info, ExternalLink, Plus } from "lucide-react";
 import { 
   achievementCategories, 
   achievementTerminology 
@@ -9,14 +9,27 @@ import { usePortfolio } from "../context/PortfolioContext";
 import SectionHeading from "../components/SectionHeading";
 import AchievementCard from "../components/AchievementCard";
 import PageTransition from "../components/PageTransition";
+import EditAchievementModal from "../components/editor/EditAchievementModal";
 
 export default function Achievements() {
-  const { achievements } = usePortfolio();
+  const { achievements, isEditMode } = usePortfolio();
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
 
   useEffect(() => {
     document.title = "Achievements & Recognition | Dileep Sajja";
   }, []);
+
+  const handleOpenAdd = () => {
+    setEditingItem(null);
+    setModalOpen(true);
+  };
+
+  const handleOpenEdit = (item) => {
+    setEditingItem(item);
+    setModalOpen(true);
+  };
 
   const filteredAchievements = achievements.filter((item) => {
     if (selectedCategory === "All") return true;
@@ -32,6 +45,27 @@ export default function Achievements() {
           highlight="& Recognition"
           subtitle="A showcase of competitive hackathon victories, innovation milestones, leadership awards, and institutional citations."
         />
+
+        {/* Edit Mode Bar */}
+        {isEditMode && (
+          <div className="mb-8 p-4 rounded-2xl glass-panel border border-amber-500/30 bg-dark-900/80 max-w-4xl mx-auto flex items-center justify-between">
+            <div>
+              <h4 className="text-sm font-bold text-amber-300 font-heading">
+                Achievement Management Active
+              </h4>
+              <p className="text-xs text-slate-400">
+                You can add new honors, edit details, or delete achievements in real-time.
+              </p>
+            </div>
+            <button
+              onClick={handleOpenAdd}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold shadow-md shadow-amber-500/25 transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Achievement</span>
+            </button>
+          </div>
+        )}
 
         {/* Terminology Context Banner for CIG & OFC */}
         <div className="mb-10 p-5 rounded-2xl glass-panel border border-violet-500/20 bg-dark-900/60 max-w-4xl mx-auto">
@@ -83,11 +117,17 @@ export default function Achievements() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.08 }}
             >
-              <AchievementCard achievement={item} />
+              <AchievementCard achievement={item} onEdit={handleOpenEdit} />
             </motion.div>
           ))}
         </div>
       </div>
+
+      <EditAchievementModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        achievementToEdit={editingItem}
+      />
     </PageTransition>
   );
 }
