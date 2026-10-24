@@ -2,22 +2,23 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Award, Trophy, Star, Sparkles, Info, ExternalLink } from "lucide-react";
 import { 
-  achievementsData, 
   achievementCategories, 
   achievementTerminology 
 } from "../data/achievements";
+import { usePortfolio } from "../context/PortfolioContext";
 import SectionHeading from "../components/SectionHeading";
 import AchievementCard from "../components/AchievementCard";
 import PageTransition from "../components/PageTransition";
 
 export default function Achievements() {
+  const { achievements } = usePortfolio();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     document.title = "Achievements & Recognition | Dileep Sajja";
   }, []);
 
-  const filteredAchievements = achievementsData.filter((item) => {
+  const filteredAchievements = achievements.filter((item) => {
     if (selectedCategory === "All") return true;
     return item.category === selectedCategory;
   });

@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowUp, Heart, Sparkles, Mail, MapPin } from "lucide-react";
-import { profileData } from "../data/profile";
+import { usePortfolio } from "../context/PortfolioContext";
 import SocialLinks from "./SocialLinks";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { profile } = usePortfolio();
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -29,30 +30,30 @@ export default function Footer() {
               <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-violet-600 to-cyan-500 p-[1.5px]">
                 <div className="w-full h-full bg-dark-900 rounded-[10px] flex items-center justify-center">
                   <span className="font-heading font-extrabold text-xs text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-cyan-300">
-                    {profileData.initials}
+                    {profile.initials}
                   </span>
                 </div>
               </div>
               <span className="font-heading font-bold text-lg text-white">
-                {profileData.name}
+                {profile.name}
               </span>
             </Link>
 
             <p className="text-slate-400 text-sm max-w-md leading-relaxed">
-              {profileData.tagline || profileData.shortIntro}
+              {profile.tagline || profile.shortIntro}
             </p>
 
             <div className="flex flex-col gap-2 pt-2 text-xs text-slate-400">
               <a 
-                href={`mailto:${profileData.email}`}
+                href={`mailto:${profile.email}`}
                 className="inline-flex items-center gap-2 hover:text-violet-300 transition-colors"
               >
                 <Mail className="w-3.5 h-3.5 text-violet-400" />
-                <span>{profileData.email}</span>
+                <span>{profile.email}</span>
               </a>
               <div className="inline-flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-                <span>{profileData.location.city}, {profileData.location.country}</span>
+                <span>{profile.location.city}, {profile.location.country}</span>
               </div>
             </div>
           </div>
@@ -99,7 +100,7 @@ export default function Footer() {
 
             <div className="mt-6">
               <a
-                href={profileData.resumeUrl}
+                href={profile.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs font-medium text-violet-400 hover:text-violet-300 transition-colors"
@@ -114,7 +115,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>
-            &copy; {currentYear} {profileData.name}. All rights reserved.
+            &copy; {currentYear} {profile.name}. All rights reserved.
           </p>
 
           <div className="flex items-center gap-6">

@@ -4,10 +4,10 @@ export const educationData = [
     level: "B.Tech / Bachelor's Degree",
     degree: "Bachelor of Technology in Information Technology",
     institution: "CVR College of Engineering",
-    affiliation: "Autonomous Institution, NAAC 'A' Grade",
+    affiliation: "Autonomous Institution, NAAC 'A' Grade, Affiliated to JNTUH",
     period: "Dec 2021 – Apr 2025",
-    status: "Graduated / Final Year",
-    grade: "CGPA: 8.56 / 10",
+    status: "Graduated",
+    grade: "CGPA: 8.44 / 10",
     location: "Ibrahimpatnam, Hyderabad, Telangana, India",
     description: "Rigorous 4-year undergraduate curriculum specializing in core computer science, software engineering methodologies, data structures, and distributed web architectures.",
     coursework: [
@@ -20,10 +20,11 @@ export const educationData = [
       "Software Engineering & Agile Practices"
     ],
     highlights: [
-      "Maintained an exceptional cumulative grade point average of 8.56/10",
+      "Graduated with a strong cumulative grade point average of 8.44/10",
       "Served as Organizational Secretary for the IngenuITy student body, directing 5+ major departmental technical symposiums",
-      "Represented the institution in national hackathons, winning 1st place in CSI HackFusion 2024",
-      "Developed HelpEZ, clinching 1st place in the Ciencia 2K24 Project Expo among 50+ competing teams"
+      "Won 1st place in CSI HackFusion national hackathon out of 100+ competing teams",
+      "Developed HelpEZ, clinching 1st place in the Ciencia 2K24 Project Expo among 50+ competing teams",
+      "Ranked among Top 100 teams nationwide out of 2,500+ participants in SAP TechFest 2024"
     ],
     certificateUrl: null
   },
@@ -47,7 +48,7 @@ export const educationData = [
     highlights: [
       "Graduated with distinction in the highly competitive MPC stream",
       "Developed strong mathematical rigor and analytical reasoning skills",
-      "Consistently performed in top percentile in state-level competitive mock exams"
+      "Consistently performed in top percentile in state-level competitive exams"
     ],
     certificateUrl: null
   },

@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Award, Calendar, ExternalLink, Maximize2, ShieldCheck } from "lucide-react";
+import { Award, Calendar, ExternalLink, Maximize2, ShieldCheck, Trash2 } from "lucide-react";
 import CertificateModal from "./CertificateModal";
+import { usePortfolio } from "../context/PortfolioContext";
 
 export default function CertificateCard({ certificate }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { isEditMode, deleteCertificate } = usePortfolio();
 
   return (
     <>
-      <div className="group rounded-2xl border border-white/10 bg-dark-850/70 hover:bg-dark-800/80 transition-all duration-300 flex flex-col overflow-hidden hover:shadow-xl hover:shadow-violet-950/20 hover:border-violet-500/30">
+      <div className="group rounded-2xl border border-white/10 bg-dark-850/70 hover:bg-dark-800/80 transition-all duration-300 flex flex-col overflow-hidden hover:shadow-xl hover:shadow-violet-950/20 hover:border-violet-500/30 relative">
         {/* Certificate Preview Frame */}
         <div 
           onClick={() => setModalOpen(true)}
@@ -50,6 +52,23 @@ export default function CertificateCard({ certificate }) {
               {certificate.category}
             </span>
           </div>
+
+          {/* Delete Action in Edit Mode */}
+          {isEditMode && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                if (window.confirm(`Delete certificate "${certificate.title}"?`)) {
+                  deleteCertificate(certificate.id);
+                }
+              }}
+              className="absolute top-2.5 right-2.5 z-20 p-2 rounded-full bg-dark-950/90 text-slate-400 hover:text-rose-400 border border-white/10 hover:border-rose-500/50 shadow-md transition-all"
+              title="Delete Certificate"
+              aria-label="Delete Certificate"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
         {/* Card Body */}

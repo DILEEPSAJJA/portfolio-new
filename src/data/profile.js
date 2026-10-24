@@ -2,39 +2,39 @@ export const profileData = {
   name: "Dileep Sajja",
   fullName: "Sajja Bala Naga Babji (Dileep)",
   initials: "DS",
-  title: "Software Engineer & Full-Stack Developer",
+  title: "Software Engineer & Java Full Stack Developer",
   status: {
     available: true,
-    label: "Available for New Opportunities",
-    subtext: "Open to Full-Time Engineering Roles & High-Impact Projects"
+    label: "Associate Engineer @ Virtusa",
+    subtext: "1 Year Professional Experience in Java, Spring Boot, Microservices & React"
   },
   avatar: "/images/profile-avatar.jpg",
   heroImage: "/images/profile-hero.jpg",
   resumeUrl: "/resume.pdf",
-  email: "sajjadileep2003@gmail.com",
+  email: "dileep.sajja03@gmail.com",
   phone: "+91 7981305975",
   location: {
-    city: "Hyderabad / Peddapuram",
-    state: "Telangana & Andhra Pradesh",
+    city: "Peddapuram, Kakinada / Hyderabad",
+    state: "Andhra Pradesh & Telangana",
     country: "India",
     collegeCampus: "CVR College of Engineering, Ibrahimpatnam, Hyderabad 501510",
     showSensitiveAddress: false // Configurable privacy flag
   },
-  shortIntro: "I build responsive, high-performance web applications and resilient software solutions with modern React, Node.js, Java, and cloud technologies.",
-  summary: "A passionate Software Engineer and Full-Stack Developer with a deep commitment to clean architecture, intuitive user experiences, and high-performance computing. Proven track record winning national hackathons (1st place CSI HackFusion among 100 teams) and building platforms serving active users. Experienced across modern web frameworks, cloud services, and scalable database design.",
+  shortIntro: "Software Engineer with 1 year of professional experience building scalable backend and full-stack applications using Java, Spring Boot, Spring Cloud Microservices, Kafka, Docker, AWS, and React.",
+  summary: "Software Engineer with 1 year of professional experience building scalable backend and full-stack applications using Java, Spring Boot, Spring Cloud Microservices, REST APIs, Kafka, Docker, AWS, and React. Strong foundation in Data Structures & Algorithms, Object-Oriented Design, distributed systems, and secure application development. Experienced in developing RESTful microservices, implementing JWT-based security, and working in Agile environments. Passionate about solving complex engineering problems and delivering customer-focused software.",
   interests: [
-    "Scalable Full-Stack Web Development",
-    "Distributed Systems & Cloud Architecture",
-    "Real-Time Applications & WebSockets",
-    "Interactive UI/UX & Creative Engineering",
-    "Disaster Management & Civic Tech Solutions"
+    "Scalable Backend & Cloud Microservices",
+    "Event-Driven Architecture with Apache Kafka",
+    "Spring Boot & JWT Security Implementations",
+    "Reactive Frontends with React & TypeScript",
+    "Distributed Systems & Cloud DevOps (Docker, AWS)"
   ],
-  careerGoals: "Seeking a challenging software engineering role at an innovative product company where I can architect robust backend services, craft seamless frontend experiences, and collaborate with visionary engineering teams.",
+  careerGoals: "Aiming to build mission-critical, enterprise-scale microservice architectures, optimize high-throughput distributed message streams, and deliver robust software products in fast-paced engineering teams.",
   highlights: [
-    { label: "B.Tech CGPA", value: "8.56 / 10", caption: "Information Technology" },
-    { label: "National Hackathons", value: "1st Place", caption: "CSI HackFusion (100 teams)" },
-    { label: "Production Apps", value: "10+", caption: "Deployed & Tested" },
-    { label: "Active Users Impacted", value: "500+", caption: "99.9% Platform Uptime" }
+    { label: "Professional Exp.", value: "1 Year", caption: "Associate Engineer @ Virtusa" },
+    { label: "B.Tech CGPA", value: "8.44 / 10", caption: "Information Technology (CVRCE)" },
+    { label: "National Hackathons", value: "1st Place", caption: "CSI HackFusion (100+ teams)" },
+    { label: "SAP TechFest", value: "Top 100", caption: "Out of 2,500+ participants" }
   ],
   socialLinks: {
     linkedin: "https://www.linkedin.com/in/dileep-sajja-317832255/",
@@ -42,59 +42,59 @@ export const profileData = {
     leetcode: "https://leetcode.com/u/DILEEPSAJJA/",
     hackerrank: "https://www.hackerrank.com/profile/sajjadileep2003",
     codechef: "https://www.codechef.com/users/dileepsajja",
-    email: "mailto:sajjadileep2003@gmail.com"
+    email: "mailto:dileep.sajja03@gmail.com"
   },
   skillCategories: [
     {
-      name: "Programming Languages",
-      icon: "Code2",
-      description: "Core languages for systems, algorithms, and full-stack development",
-      skills: [
-        { name: "Java", level: "Advanced", experience: "Academic & Projects" },
-        { name: "JavaScript (ES6+)", level: "Advanced", experience: "Daily Driver" },
-        { name: "TypeScript", level: "Proficient", experience: "Full-Stack Web" },
-        { name: "C / C++", level: "Proficient", experience: "Data Structures & Algos" },
-        { name: "SQL", level: "Advanced", experience: "HackerRank Gold Certified" },
-        { name: "Python", level: "Intermediate", experience: "AI/ML Certification" }
-      ]
-    },
-    {
-      name: "Frontend & UI Engineering",
-      icon: "Layout",
-      description: "Modern component architectures, animation, and responsive design",
-      skills: [
-        { name: "React.js", level: "Advanced", experience: "Primary Library" },
-        { name: "React Native (Expo)", level: "Proficient", experience: "Mobile App Development" },
-        { name: "Tailwind CSS", level: "Advanced", experience: "Utility-First Styling" },
-        { name: "Framer Motion", level: "Proficient", experience: "Micro-interactions & Motion" },
-        { name: "HTML5 / CSS3", level: "Advanced", experience: "Semantic Standards" },
-        { name: "Vite", level: "Advanced", experience: "Build Tooling" }
-      ]
-    },
-    {
-      name: "Backend, APIs & Cloud",
+      name: "Backend & Microservices",
       icon: "Server",
-      description: "Server architecture, microservices, databases, and deployments",
+      description: "Enterprise Java backend architectures, microservices, and distributed streaming",
       skills: [
-        { name: "Node.js", level: "Proficient", experience: "Event-driven runtime" },
-        { name: "Express.js", level: "Proficient", experience: "RESTful API Design" },
-        { name: "Firebase", level: "Advanced", experience: "Auth, Firestore, Hosting" },
-        { name: "MySQL / PostgreSQL", level: "Proficient", experience: "Relational Modeling" },
-        { name: "MongoDB", level: "Proficient", experience: "Document Database" },
-        { name: "AWS Basics", level: "Certified", experience: "Simplilearn Certified" }
+        { name: "Java", level: "Advanced", experience: "Core & Enterprise" },
+        { name: "Spring Boot", level: "Advanced", experience: "Production Microservices" },
+        { name: "Spring Cloud", level: "Proficient", experience: "Eureka, Config Server, Gateway" },
+        { name: "Apache Kafka", level: "Proficient", experience: "Event-Driven Communication" },
+        { name: "Spring Security & JWT", level: "Advanced", experience: "Role-Based Auth & Tokens" },
+        { name: "Spring Data JPA / Hibernate", level: "Advanced", experience: "ORM & Query Optimization" },
+        { name: "RESTful APIs", level: "Advanced", experience: "Design & Swagger Docs" }
       ]
     },
     {
-      name: "Developer Tools & Methodologies",
-      icon: "Wrench",
-      description: "DevOps, testing, version control, and collaborative workflows",
+      name: "Frontend Engineering",
+      icon: "Layout",
+      description: "Modern component frameworks, reactive state, and responsive styling",
       skills: [
-        { name: "Git & GitHub", level: "Advanced", experience: "Version Control" },
-        { name: "Postman", level: "Proficient", experience: "API Testing" },
-        { name: "VS Code", level: "Advanced", experience: "Primary IDE" },
-        { name: "Linux / Shell", level: "Intermediate", experience: "Terminal & CLI" },
-        { name: "Agile / Scrum", level: "Proficient", experience: "Team Collaboration" },
-        { name: "WebSockets", level: "Proficient", experience: "Real-time sync" }
+        { name: "React.js", level: "Advanced", experience: "Full-Stack Web" },
+        { name: "TypeScript", level: "Proficient", experience: "Type-Safe Components" },
+        { name: "Tailwind CSS", level: "Advanced", experience: "Utility-First Styling" },
+        { name: "HTML5 / CSS3", level: "Advanced", experience: "Semantic Standards" },
+        { name: "Bootstrap & Material UI", level: "Proficient", experience: "UI Component Systems" },
+        { name: "React Native (Expo)", level: "Proficient", experience: "Mobile Applications" }
+      ]
+    },
+    {
+      name: "Databases & Query Engines",
+      icon: "Database",
+      description: "Relational modeling, document stores, caching, and database tuning",
+      skills: [
+        { name: "SQL", level: "Advanced", experience: "HackerRank Gold Certified" },
+        { name: "MySQL", level: "Advanced", experience: "Relational Modeling" },
+        { name: "MongoDB", level: "Proficient", experience: "Document Database" },
+        { name: "Firebase Firestore", level: "Advanced", experience: "Real-Time Cloud Database" },
+        { name: "H2 Database", level: "Proficient", experience: "In-Memory Testing" }
+      ]
+    },
+    {
+      name: "DevOps, Cloud & Developer Tools",
+      icon: "Wrench",
+      description: "Containerization, cloud services, build tooling, and test instrumentation",
+      skills: [
+        { name: "Docker", level: "Proficient", experience: "Containerization & Workflows" },
+        { name: "AWS Cloud", level: "Certified", experience: "AWS Certified Developer Track" },
+        { name: "Git & GitHub", level: "Advanced", experience: "CI/CD & Version Control" },
+        { name: "Maven", level: "Advanced", experience: "Java Dependency Management" },
+        { name: "Postman & Swagger", level: "Advanced", experience: "API Validation & Testing" },
+        { name: "IntelliJ IDEA & VS Code", level: "Advanced", experience: "Primary Development IDEs" }
       ]
     }
   ]

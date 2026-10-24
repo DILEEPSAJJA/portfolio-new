@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FloatingElements from "../components/FloatingElements";
 import ScrollToTop from "../components/ScrollToTop";
+import EditorToolbar from "../components/editor/EditorToolbar";
 
 export default function MainLayout() {
   return (
@@ -21,6 +22,9 @@ export default function MainLayout() {
       <main className="flex-1 pt-24 sm:pt-28 pb-12 z-10">
         <Outlet />
       </main>
+
+      {/* Floating live editor toolbar when in edit mode */}
+      <EditorToolbar />
 
       {/* Shared Footer */}
       <Footer />

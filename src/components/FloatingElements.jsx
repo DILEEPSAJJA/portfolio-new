@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ArrowUp, Sparkles, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { profileData } from "../data/profile";
+import { usePortfolio } from "../context/PortfolioContext";
 
 export default function FloatingElements() {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const { status, email } = profileData;
+  const { profile } = usePortfolio();
+  const { status, email } = profile;
 
   useEffect(() => {
     const handleScroll = () => {

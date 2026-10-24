@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck, Award, ExternalLink, CheckCircle } from "lucide-react";
-import { certificatesData, certificatesCategories } from "../data/certificates";
+import { ShieldCheck, Award, ExternalLink, Upload, Plus } from "lucide-react";
+import { usePortfolio } from "../context/PortfolioContext";
+import { certificatesCategories } from "../data/certificates";
 import SectionHeading from "../components/SectionHeading";
 import CertificateCard from "../components/CertificateCard";
 import PageTransition from "../components/PageTransition";
+import AddCertificateModal from "../components/editor/AddCertificateModal";
 
 export default function Certificates() {
+  const { certificates, isEditMode } = usePortfolio();
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
 
   useEffect(() => {
     document.title = "Certifications & Credentials | Dileep Sajja";
   }, []);
 
-  const filteredCertificates = certificatesData.filter(
+  const filteredCertificates = certificates.filter(
     (cert) => selectedCategory === "All" || cert.category === selectedCategory
   );
 
@@ -26,6 +30,27 @@ export default function Certificates() {
           highlight="& Training"
           subtitle="Accredited technical credentials, university symposium courses, and merit recognitions with direct verification proofs."
         />
+
+        {/* Action Header in Edit Mode */}
+        {isEditMode && (
+          <div className="mb-8 p-4 rounded-2xl glass-panel border border-cyan-500/30 bg-dark-900/80 flex items-center justify-between">
+            <div>
+              <h4 className="text-sm font-bold text-cyan-300 font-heading">
+                Certificate Management Active
+              </h4>
+              <p className="text-xs text-slate-400">
+                You can upload certificate photos from your device and publish them immediately.
+              </p>
+            </div>
+            <button
+              onClick={() => setUploadModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white shadow-md shadow-cyan-600/30 transition-all"
+            >
+              <Upload className="w-4 h-4" />
+              <span>Upload Certificate</span>
+            </button>
+          </div>
+        )}
 
         {/* Category Filters */}
         <div className="mb-10 flex items-center justify-center gap-2 overflow-x-auto pb-2 scrollbar-none">
@@ -55,7 +80,7 @@ export default function Certificates() {
               key={cert.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
             >
               <CertificateCard certificate={cert} />
             </motion.div>
@@ -73,7 +98,7 @@ export default function Certificates() {
                 Authentic & Verified Credentials
               </h4>
               <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">
-                All certificates represent legitimate completions from NIT Warangal, AWS Simplilearn, and HackerRank. Click any certificate to inspect full resolution transcripts.
+                All certificates represent legitimate completions from AWS, HackerRank, NIT Warangal, and Simplilearn. Click any certificate to inspect full resolution transcripts.
               </p>
             </div>
           </div>
@@ -89,6 +114,11 @@ export default function Certificates() {
           </a>
         </div>
       </div>
+
+      <AddCertificateModal
+        isOpen={uploadModalOpen}
+        onClose={() => setUploadModalOpen(false)}
+      />
     </PageTransition>
   );
 }

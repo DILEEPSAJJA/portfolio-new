@@ -1,9 +1,10 @@
 import React from "react";
 import { GraduationCap, Calendar, MapPin, Award, BookOpen, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
-import { educationData } from "../data/education";
+import { usePortfolio } from "../context/PortfolioContext";
 
 export default function EducationTimeline() {
+  const { education } = usePortfolio();
   return (
     <div className="relative">
       {/* Central Timeline Vertical Guide Line (Desktop) */}
@@ -17,7 +18,7 @@ export default function EducationTimeline() {
       />
 
       <div className="space-y-12">
-        {educationData.map((item, index) => {
+        {education.map((item, index) => {
           const isEven = index % 2 === 0;
 
           return (

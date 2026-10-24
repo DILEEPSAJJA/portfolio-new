@@ -29,15 +29,32 @@ export const achievementsData = [
     organization: "CSI Hyderabad (Computer Society of India)",
     date: "2024",
     featured: true,
-    badge: "National 1st Rank",
-    description: "Ranked 1st out of 100 participating engineering teams from across the nation in an intense 24-hour hackathon organized by the Computer Society of India (CSI) Hyderabad chapter.",
+    badge: "National 1st Rank (100+ Teams)",
+    description: "Secured 1st place among 100+ teams at the prestigious national-level hackathon organized by the Computer Society of India (CSI) Hyderabad chapter.",
     highlights: [
-      "Secured 1st Place overall against 100 competitive engineering teams nationwide",
-      "Architected, built, and presented a full-stack real-time emergency response solution under timed constraints",
-      "Lauded by the jury for technical excellence, UI execution, and social impact"
+      "Ranked 1st overall out of 100+ engineering teams nationwide",
+      "Architected, implemented, and defended a full-stack real-time emergency triage solution",
+      "Lauded by judges for production readiness, intuitive UI, and societal impact"
     ],
     proofUrl: null,
     icon: "Trophy"
+  },
+  {
+    id: "sap-labs-techfest-2024",
+    title: "SAP TechFest Finalist 2024",
+    category: "Hackathons & Competitions",
+    organization: "SAP Labs India",
+    date: "2024",
+    featured: true,
+    badge: "Top 100 (2,500+ Participants)",
+    description: "Ranked among the Top 100 teams out of 2,500+ participants nationwide in the prestigious SAP TechFest 2024.",
+    highlights: [
+      "Advanced through competitive rounds into the top percentile of nationwide developers",
+      "Demonstrated scalable enterprise Java architecture and microservices design",
+      "Engaged in technical evaluations and architectural defense with SAP architects"
+    ],
+    proofUrl: null,
+    icon: "Star"
   },
   {
     id: "ciencia-winner-2024",
@@ -46,32 +63,32 @@ export const achievementsData = [
     organization: "Ciencia 2K24 Technical Symposium",
     date: "2024",
     featured: true,
-    badge: "1st Place (50+ Projects)",
-    description: "Clinched 1st place in the flagship Project Expo among 50+ innovative engineering capstone projects for demonstrating 'HelpEZ' — a disaster management and crowdsourced assistance platform.",
+    badge: "1st Place (50+ Competing Projects)",
+    description: "Secured 1st place at Ciencia 2K24 among 50+ competing engineering projects for demonstrating 'HelpEZ' — an emergency disaster management and crowdsourcing application.",
     highlights: [
-      "Presented live working demonstration of the mobile app and administrative emergency dispatch dashboard",
-      "Evaluated by industry panelists on architectural feasibility, AI classification, and offline mesh capabilities",
+      "Presented live demonstration of mobile app and administrative dispatch portal",
+      "Evaluated by industry panelists on architectural feasibility, AI triage, and offline mesh capabilities",
       "Awarded top honors and merit citation"
     ],
     proofUrl: "https://helpez.vercel.app",
     icon: "Award"
   },
   {
-    id: "sap-labs-techfest-2024",
-    title: "National Top 5 Finalist — TechFest 2024",
-    category: "Hackathons & Competitions",
-    organization: "SAP Labs India",
-    date: "2024",
-    featured: true,
-    badge: "Top 5 (200+ Teams)",
-    description: "Selected into the coveted Top 5 finalist teams at the prestigious SAP Labs TechFest, competing against over 200 premier technical college teams nationwide.",
+    id: "ingenuity-leadership-citation",
+    title: "Organizational Secretary Leadership Citation",
+    category: "Organizational & Leadership",
+    organization: "IngenuITy (Department of IT, CVRCE)",
+    date: "2023 – 2025",
+    featured: false,
+    badge: "Leadership Award",
+    description: "Led 5+ departmental technical events under IngenuITy, increasing student participation by 30%.",
     highlights: [
-      "Demonstrated scalable enterprise software architecture and microservices design",
-      "Competed across rigorous technical screening, prototype defense, and live code reviews",
-      "Mentored by SAP senior engineering architects during the finalist round"
+      "Orchestrated cross-functional student teams managing registration systems, workshops, and contests",
+      "Spearheaded collaborative hackathons fostering peer-to-peer developer growth",
+      "Praised by faculty heads for impeccable organizational rigor and positive student impact"
     ],
     proofUrl: null,
-    icon: "Star"
+    icon: "Users"
   },
   {
     id: "cig-innovation-milestone",
@@ -106,23 +123,6 @@ export const achievementsData = [
     ],
     proofUrl: null,
     icon: "Flame"
-  },
-  {
-    id: "ingenuity-leadership-citation",
-    title: "Organizational Secretary Leadership Citation",
-    category: "Organizational & Leadership",
-    organization: "IngenuITy (Department of IT, CVRCE)",
-    date: "2023 – 2025",
-    featured: false,
-    badge: "Leadership Award",
-    description: "Honored with a departmental citation for visionary leadership, executing 5+ technical symposiums that expanded community participation by 30%.",
-    highlights: [
-      "Orchestrated cross-functional student teams managing registration systems, workshops, and contests",
-      "Spearheaded collaborative hackathons fostering peer-to-peer developer growth",
-      "Praised by faculty heads for impeccable organizational rigor and positive student impact"
-    ],
-    proofUrl: null,
-    icon: "Users"
   },
   {
     id: "theatre-treasurer-honor",

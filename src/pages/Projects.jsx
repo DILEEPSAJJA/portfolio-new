@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FolderGit2, Search, Filter, Sparkles, Layers } from "lucide-react";
-import { projectsData, projectCategories } from "../data/projects";
+import { projectCategories } from "../data/projects";
+import { usePortfolio } from "../context/PortfolioContext";
 import SectionHeading from "../components/SectionHeading";
 import ProjectCard from "../components/ProjectCard";
 import PageTransition from "../components/PageTransition";
 
 export default function Projects() {
+  const { projects } = usePortfolio();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -15,7 +17,7 @@ export default function Projects() {
   }, []);
 
   // Filter projects by category and search keyword
-  const filteredProjects = projectsData.filter((project) => {
+  const filteredProjects = projects.filter((project) => {
     const matchesCategory =
       selectedCategory === "All" || project.category === selectedCategory;
 

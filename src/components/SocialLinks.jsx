@@ -7,10 +7,11 @@ import {
   HackerRankIcon, 
   CodeChefIcon 
 } from "./BrandIcons";
-import { profileData } from "../data/profile";
+import { usePortfolio } from "../context/PortfolioContext";
 
 export default function SocialLinks({ variant = "simple", className = "" }) {
-  const { socialLinks } = profileData;
+  const { profile } = usePortfolio();
+  const { socialLinks } = profile;
 
   const links = [
     {

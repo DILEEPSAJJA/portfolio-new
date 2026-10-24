@@ -9,21 +9,22 @@ import {
   EyeOff, 
   CheckCircle2, 
   Sparkles, 
-  Building, 
-  GraduationCap, 
   Globe, 
   Code2, 
   Layers, 
   Server, 
   Wrench,
-  ShieldCheck,
-  Target
+  Target,
+  Plus,
+  Trash2,
+  Edit3
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { profileData } from "../data/profile";
+import { usePortfolio } from "../context/PortfolioContext";
 import SectionHeading from "../components/SectionHeading";
 import SocialLinks from "../components/SocialLinks";
 import PageTransition from "../components/PageTransition";
+import AddSkillModal from "../components/editor/AddSkillModal";
 
 const skillCategoryIcons = {
   Code2: Code2,
@@ -33,15 +34,17 @@ const skillCategoryIcons = {
 };
 
 export default function Profile() {
-  const [showAddress, setShowAddress] = useState(profileData.location.showSensitiveAddress);
+  const { profile, isEditMode, deleteSkill } = usePortfolio();
+  const [showAddress, setShowAddress] = useState(profile.location.showSensitiveAddress);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [addSkillOpen, setAddSkillOpen] = useState(false);
 
   useEffect(() => {
-    document.title = `Profile & Skills | ${profileData.name}`;
-  }, []);
+    document.title = `Profile & Skills | ${profile.name}`;
+  }, [profile.name]);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(profileData.email);
+    navigator.clipboard.writeText(profile.email);
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2500);
   };
@@ -65,8 +68,8 @@ export default function Profile() {
             <div className="relative flex-shrink-0">
               <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden border-2 border-violet-500/40 p-1 bg-gradient-to-tr from-violet-600 via-indigo-500 to-cyan-400 shadow-xl shadow-violet-950/30">
                 <img
-                  src={profileData.heroImage}
-                  alt={profileData.fullName}
+                  src={profile.heroImage}
+                  alt={profile.fullName}
                   className="w-full h-full object-cover object-top rounded-xl"
                 />
               </div>
@@ -74,7 +77,7 @@ export default function Profile() {
               {/* Status Indicator */}
               <div className="absolute -bottom-2 -right-2 px-2.5 py-1 rounded-full bg-dark-950 border border-emerald-500/40 text-[11px] font-semibold text-emerald-300 flex items-center gap-1.5 shadow-md">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span>Active</span>
+                <span>Virtusa</span>
               </div>
             </div>
 
@@ -82,18 +85,18 @@ export default function Profile() {
             <div className="flex-1 text-center lg:text-left space-y-4">
               <div>
                 <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white">
-                  {profileData.fullName}
+                  {profile.fullName}
                 </h2>
                 <p className="text-sm sm:text-base font-semibold text-cyan-400 mt-1">
-                  {profileData.title}
+                  {profile.title}
                 </p>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Known professionally as <span className="text-slate-200">{profileData.name}</span>
+                  Known professionally as <span className="text-slate-200">{profile.name}</span>
                 </p>
               </div>
 
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
-                {profileData.summary}
+                {profile.summary}
               </p>
 
               {/* Contact Information & Privacy-Toggled Address Grid */}
@@ -102,7 +105,7 @@ export default function Profile() {
                 <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
                   <div className="flex items-center gap-2.5 overflow-hidden">
                     <Mail className="w-4 h-4 text-violet-400 flex-shrink-0" />
-                    <span className="truncate">{profileData.email}</span>
+                    <span className="truncate">{profile.email}</span>
                   </div>
                   <button
                     onClick={handleCopyEmail}
@@ -115,7 +118,7 @@ export default function Profile() {
                 {/* Phone */}
                 <div className="flex items-center gap-2.5 p-3 rounded-xl bg-white/5 border border-white/5">
                   <Phone className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                  <span>{profileData.phone}</span>
+                  <span>{profile.phone}</span>
                 </div>
 
                 {/* Location with toggle for sensitive address */}
@@ -124,11 +127,11 @@ export default function Profile() {
                     <MapPin className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5 sm:mt-0" />
                     <div>
                       <span className="font-medium text-white">
-                        {profileData.location.city}, {profileData.location.state}, {profileData.location.country}
+                        {profile.location.city}, {profile.location.state}, {profile.location.country}
                       </span>
                       {showAddress && (
                         <p className="text-[11px] text-slate-400 mt-0.5">
-                          Institution Base: {profileData.location.collegeCampus}
+                          Academic Base: {profile.location.collegeCampus}
                         </p>
                       )}
                     </div>
@@ -157,7 +160,7 @@ export default function Profile() {
               {/* Action Buttons */}
               <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-3">
                 <a
-                  href={profileData.resumeUrl}
+                  href={profile.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-md shadow-violet-600/30 transition-all transform hover:-translate-y-0.5"
@@ -168,7 +171,7 @@ export default function Profile() {
                 </a>
 
                 <a
-                  href={`mailto:${profileData.email}?subject=Direct%20Inquiry%20from%20Portfolio`}
+                  href={`mailto:${profile.email}?subject=Direct%20Inquiry%20from%20Portfolio`}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 transition-all"
                 >
                   <Mail className="w-4 h-4 text-violet-400" />
@@ -196,18 +199,32 @@ export default function Profile() {
 
         {/* Technical Skills Grouped by Category */}
         <section className="mb-14">
-          <div className="mb-8">
-            <h3 className="font-heading text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-              <Code2 className="w-5 h-5 text-cyan-400" />
-              <span>Technical Skills & Competencies</span>
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              Categorized technologies, libraries, databases, and engineering tools leveraged across production applications.
-            </p>
+          <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="font-heading text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                <Code2 className="w-5 h-5 text-cyan-400" />
+                <span>Technical Skills & Competencies</span>
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                Categorized technologies, libraries, databases, and engineering tools leveraged across production applications.
+              </p>
+            </div>
+
+            {/* In Edit Mode, allow direct "+ Add Skill" button */}
+            {isEditMode && (
+              <button
+                type="button"
+                onClick={() => setAddSkillOpen(true)}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-md shadow-violet-600/30 transition-all self-start sm:self-auto"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add Skill</span>
+              </button>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {profileData.skillCategories.map((category) => {
+            {profile.skillCategories.map((category) => {
               const IconComp = skillCategoryIcons[category.icon] || Code2;
 
               return (
@@ -216,17 +233,19 @@ export default function Profile() {
                   className="glass-card rounded-2xl p-6 sm:p-7 border border-white/10 flex flex-col justify-between hover:border-violet-500/30 transition-all"
                 >
                   <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2.5 rounded-xl bg-violet-600/10 border border-violet-500/20 text-violet-400">
-                        <IconComp className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h4 className="font-heading font-bold text-base sm:text-lg text-white">
-                          {category.name}
-                        </h4>
-                        <p className="text-[11px] text-slate-400">
-                          {category.description}
-                        </p>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2.5 rounded-xl bg-violet-600/10 border border-violet-500/20 text-violet-400">
+                          <IconComp className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h4 className="font-heading font-bold text-base sm:text-lg text-white">
+                            {category.name}
+                          </h4>
+                          <p className="text-[11px] text-slate-400">
+                            {category.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
 
@@ -234,7 +253,7 @@ export default function Profile() {
                       {category.skills.map((skill) => (
                         <div
                           key={skill.name}
-                          className="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-white/15 transition-colors"
+                          className="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-white/15 transition-colors relative group/skill"
                         >
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-semibold text-slate-200">
@@ -247,6 +266,17 @@ export default function Profile() {
                           <span className="text-[10px] text-slate-400 mt-1 block">
                             {skill.experience}
                           </span>
+
+                          {/* Delete Skill Action in Edit Mode */}
+                          {isEditMode && (
+                            <button
+                              onClick={() => deleteSkill(category.name, skill.name)}
+                              className="absolute top-2 right-2 p-1 rounded bg-dark-950/80 text-slate-500 hover:text-rose-400 opacity-0 group-hover/skill:opacity-100 transition-opacity"
+                              title={`Remove ${skill.name}`}
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -265,7 +295,7 @@ export default function Profile() {
               <span>Core Engineering Interests</span>
             </h4>
             <ul className="space-y-2">
-              {profileData.interests.map((interest, i) => (
+              {profile.interests.map((interest, i) => (
                 <li key={i} className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300">
                   <CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0" />
                   <span>{interest}</span>
@@ -280,17 +310,22 @@ export default function Profile() {
               <span>Career Vision & Objectives</span>
             </h4>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              {profileData.careerGoals}
+              {profile.careerGoals}
             </p>
             <div className="mt-4 pt-3 border-t border-white/5">
               <span className="text-xs font-semibold text-slate-400">Current Status:</span>
               <p className="text-xs text-emerald-400 font-medium mt-0.5">
-                {profileData.status.subtext}
+                {profile.status.subtext}
               </p>
             </div>
           </div>
         </section>
       </div>
+
+      <AddSkillModal
+        isOpen={addSkillOpen}
+        onClose={() => setAddSkillOpen(false)}
+      />
     </PageTransition>
   );
 }

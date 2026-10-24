@@ -1,8 +1,10 @@
 import React from "react";
-import { Briefcase, Calendar, MapPin, CheckCircle2, Sparkles, Building2 } from "lucide-react";
+import { Briefcase, Calendar, MapPin, CheckCircle2, Sparkles, Building2, Edit3, Trash2 } from "lucide-react";
+import { usePortfolio } from "../context/PortfolioContext";
 
-export default function ExperienceCard({ experience }) {
+export default function ExperienceCard({ experience, onEdit }) {
   const isCurrent = experience.current;
+  const { isEditMode, deleteExperience } = usePortfolio();
 
   return (
     <div className={`glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden border transition-all duration-300 ${
@@ -84,6 +86,32 @@ export default function ExperienceCard({ experience }) {
               {tech}
             </span>
           ))}
+        </div>
+      )}
+
+      {/* In-Card Edit & Delete Actions for Edit Mode */}
+      {isEditMode && (
+        <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => onEdit(experience)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-600/20 hover:bg-violet-600/30 text-violet-300 border border-violet-500/30 transition-colors"
+          >
+            <Edit3 className="w-3.5 h-3.5" />
+            <span>Edit Entry</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              if (window.confirm(`Delete experience entry for ${experience.company}?`)) {
+                deleteExperience(experience.id);
+              }
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 transition-colors"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+            <span>Delete</span>
+          </button>
         </div>
       )}
     </div>

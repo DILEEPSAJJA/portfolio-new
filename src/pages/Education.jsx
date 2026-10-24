@@ -29,7 +29,7 @@ export default function Education() {
               <Award className="w-5 h-5" />
             </div>
             <h4 className="font-heading font-bold text-base text-white">
-              Undergraduate CGPA: 8.56
+              Undergraduate CGPA: 8.44
             </h4>
             <p className="text-xs text-slate-400 mt-1 leading-relaxed">
               Maintained high academic performance throughout the 4-year B.Tech Information Technology curriculum at CVR College of Engineering.

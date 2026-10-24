@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
@@ -6,22 +6,25 @@ import {
   FileText, 
   Sparkles, 
   Terminal, 
-  Compass, 
   FolderGit2, 
   UserCheck, 
   Award,
-  ChevronDown,
-  Layers,
-  Code2
+  Edit3,
+  Lock,
+  Unlock
 } from "lucide-react";
-import { profileData } from "../data/profile";
+import { usePortfolio } from "../context/PortfolioContext";
 import SocialLinks from "../components/SocialLinks";
 import PageTransition from "../components/PageTransition";
+import PinModal from "../components/PinModal";
 
 export default function Home() {
+  const { profile, isEditMode } = usePortfolio();
+  const [pinModalOpen, setPinModalOpen] = useState(false);
+
   useEffect(() => {
-    document.title = `${profileData.name} | Software Engineer & Creative Developer`;
-  }, []);
+    document.title = `${profile.name} | Software Engineer & Java Full Stack Developer`;
+  }, [profile.name]);
 
   return (
     <PageTransition>
@@ -38,39 +41,39 @@ export default function Home() {
             {/* Status Pill */}
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs font-semibold tracking-wide">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span>Full-Stack Web & Software Engineer</span>
+              <span>{profile.status.label}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-white tracking-tight leading-[1.15]">
               Hi, I’m{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-indigo-300 to-cyan-400">
-                {profileData.name}
+                {profile.name}
               </span>
               <br />
               <span className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-300 mt-2 block">
-                {profileData.title}
+                {profile.title}
               </span>
             </h1>
 
             {/* Short Impactful Intro */}
             <p className="text-base sm:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
-              {profileData.shortIntro}
+              {profile.shortIntro}
             </p>
 
             {/* Background & Interests Summary */}
             <p className="text-sm text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Graduate from <span className="text-slate-200 font-medium">CVR College of Engineering</span> (B.Tech IT, 8.56 CGPA). Passionate about crafting resilient full-stack systems, real-time web applications, and intuitive UI/UX with modern React, Node.js, and Java.
+              Software Engineer with 1 year professional experience building scalable backend microservices and reactive interfaces using <span className="text-slate-200 font-medium">Java, Spring Boot, Spring Cloud, Kafka, Docker, AWS, and React</span>. B.Tech in IT from CVR College of Engineering ({profile.highlights[1]?.value || "8.44"} CGPA).
             </p>
 
             {/* Primary & Secondary Call to Actions */}
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3.5">
               <Link
                 to="/projects"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-heading font-semibold text-sm bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-xl shadow-violet-600/30 transition-all duration-200 transform hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-heading font-semibold text-sm bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-xl shadow-violet-600/30 transition-all duration-200 transform hover:-translate-y-0.5"
               >
                 <span>Explore My Projects</span>
                 <ArrowRight className="w-4 h-4" />
@@ -78,22 +81,46 @@ export default function Home() {
 
               <Link
                 to="/profile"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-heading font-semibold text-sm bg-dark-850 hover:bg-dark-800 text-slate-200 hover:text-white border border-white/10 hover:border-violet-500/40 transition-all duration-200 transform hover:-translate-y-0.5 shadow-sm"
+                className="inline-flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl font-heading font-semibold text-sm bg-dark-850 hover:bg-dark-800 text-slate-200 hover:text-white border border-white/10 hover:border-violet-500/40 transition-all duration-200 transform hover:-translate-y-0.5 shadow-sm"
               >
                 <span>View Full Profile</span>
                 <UserCheck className="w-4 h-4 text-violet-400" />
               </Link>
 
               <a
-                href={profileData.resumeUrl}
+                href={profile.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-heading font-semibold text-sm text-slate-400 hover:text-white transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-heading font-semibold text-sm text-slate-400 hover:text-white transition-colors"
                 title="Download Resume PDF"
               >
                 <FileText className="w-4 h-4 text-slate-400" />
                 <span>Resume (PDF)</span>
               </a>
+
+              {/* Edit Portfolio Button Protected by PIN Code */}
+              <button
+                type="button"
+                onClick={() => setPinModalOpen(true)}
+                className={`inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-heading font-semibold text-sm transition-all duration-200 transform hover:-translate-y-0.5 ${
+                  isEditMode
+                    ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25"
+                    : "bg-violet-600/10 hover:bg-violet-600/20 text-violet-300 border border-violet-500/30 hover:border-violet-500/60"
+                }`}
+                title="Unlock editing mode to add skills, upload certificates, and edit experience"
+              >
+                {isEditMode ? (
+                  <>
+                    <Unlock className="w-4 h-4 text-emerald-400" />
+                    <span>Edit Mode Active</span>
+                  </>
+                ) : (
+                  <>
+                    <Lock className="w-4 h-4 text-violet-400" />
+                    <span>Edit Portfolio</span>
+                  </>
+                )}
+              </button>
             </div>
 
             {/* Social Links Row */}
@@ -119,8 +146,8 @@ export default function Home() {
             <div className="relative p-2 rounded-3xl bg-gradient-to-tr from-violet-600/60 via-indigo-500/30 to-cyan-400/60 shadow-2xl shadow-violet-950/40">
               <div className="relative rounded-[22px] overflow-hidden bg-dark-900 border border-white/10 w-64 sm:w-80 md:w-88 aspect-[4/5] shadow-inner">
                 <img
-                  src={profileData.heroImage}
-                  alt={profileData.name}
+                  src={profile.heroImage}
+                  alt={profile.name}
                   loading="eager"
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
                 />
@@ -133,10 +160,10 @@ export default function Home() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs font-heading font-bold text-white">
-                        {profileData.name}
+                        {profile.name}
                       </p>
                       <p className="text-[11px] text-cyan-300">
-                        {profileData.title}
+                        {profile.title}
                       </p>
                     </div>
                     <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-md shadow-emerald-400/50 animate-ping" />
@@ -150,7 +177,7 @@ export default function Home() {
         {/* Compact Highlights Area */}
         <section className="py-8 border-y border-white/10 my-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {profileData.highlights.map((h, i) => (
+            {profile.highlights.map((h, i) => (
               <motion.div
                 key={h.label}
                 initial={{ opacity: 0, y: 15 }}
@@ -173,7 +200,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Quick Navigation Teaser Cards to Explore Dedicated Pages */}
+        {/* Quick Navigation Teaser Cards */}
         <section className="py-12">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white">
@@ -197,7 +224,7 @@ export default function Home() {
                   Featured Projects
                 </h3>
                 <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                  FLEW dessert shop, HelpEZ disaster crowdsourcing, TicketDesk, and real-time platforms with live demos and repositories.
+                  FLEW dessert shop, HelpEZ disaster response app, TicketDesk, and real-time platforms with live demos and repositories.
                 </p>
               </div>
               <div className="mt-5 flex items-center gap-1 text-xs font-semibold text-violet-400 group-hover:translate-x-1 transition-transform">
@@ -218,7 +245,7 @@ export default function Home() {
                   Skills & Profiles
                 </h3>
                 <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                  Categorized technical stack (Java, React, SQL, Cloud), coding handles (LeetCode, HackerRank, CodeChef), and contact details.
+                  Categorized technical stack (Java, Spring Boot, Microservices, Kafka, React), coding handles (LeetCode, HackerRank, CodeChef), and contact details.
                 </p>
               </div>
               <div className="mt-5 flex items-center gap-1 text-xs font-semibold text-cyan-400 group-hover:translate-x-1 transition-transform">
@@ -239,7 +266,7 @@ export default function Home() {
                   Achievements & Honors
                 </h3>
                 <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                  National Hackathon Winner (CSI HackFusion 1st of 100 teams), SAP TechFest Finalist, CIG & OFC recognitions.
+                  National Hackathon Winner (CSI HackFusion 1st of 100+ teams), SAP TechFest Finalist (Top 100 / 2,500+), Ciencia 2K24 1st Place.
                 </p>
               </div>
               <div className="mt-5 flex items-center gap-1 text-xs font-semibold text-amber-400 group-hover:translate-x-1 transition-transform">
@@ -250,6 +277,12 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      {/* PIN Authentication Prompt Dialog */}
+      <PinModal
+        isOpen={pinModalOpen}
+        onClose={() => setPinModalOpen(false)}
+      />
     </PageTransition>
   );
 }
