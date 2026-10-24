@@ -9,6 +9,7 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [employmentType, setEmploymentType] = useState("Full-Time");
+  const [category, setCategory] = useState("work");
   const [period, setPeriod] = useState("");
   const [current, setCurrent] = useState(false);
   const [location, setLocation] = useState("");
@@ -21,6 +22,7 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
       setCompany(experienceToEdit.company || "");
       setRole(experienceToEdit.role || "");
       setEmploymentType(experienceToEdit.employmentType || "Full-Time");
+      setCategory(experienceToEdit.category || (experienceToEdit.company?.toLowerCase().includes("virtusa") ? "work" : "leadership"));
       setPeriod(experienceToEdit.period || "");
       setCurrent(experienceToEdit.current || false);
       setLocation(experienceToEdit.location || "");
@@ -35,6 +37,7 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
       setCompany("");
       setRole("");
       setEmploymentType("Full-Time");
+      setCategory("work");
       setPeriod("");
       setCurrent(false);
       setLocation("");
@@ -74,6 +77,8 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
       company: company.trim(),
       role: role.trim(),
       employmentType,
+      category,
+      categoryLabel: category === "work" ? "Work Experience" : "Roles & Responsibilities",
       period: period.trim() || "Present",
       current,
       location: location.trim() || "Remote / Hybrid",
@@ -124,15 +129,65 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
           </div>
           <div>
             <h3 className="font-heading font-bold text-xl text-white">
-              {experienceToEdit ? "Edit Experience Entry" : "Add Experience Entry"}
+              {experienceToEdit ? "Edit Entry" : "Add New Entry"}
             </h3>
             <p className="text-xs text-slate-400">
-              Update organization roles, dates, responsibilities, and technologies
+              Categorize as Work Experience (e.g. Virtusa) or Roles & Responsibilities
             </p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 text-left">
+          {/* Classification Option */}
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              Section Classification *
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <label
+                className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer text-xs font-medium transition-all ${
+                  category === "work"
+                    ? "bg-violet-600/20 border-violet-500 text-white shadow-md shadow-violet-600/20"
+                    : "bg-dark-950 border-white/10 text-slate-400 hover:border-white/20"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="category"
+                  value="work"
+                  checked={category === "work"}
+                  onChange={() => setCategory("work")}
+                  className="hidden"
+                />
+                <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${category === "work" ? "border-violet-400 bg-violet-500" : "border-slate-500"}`}>
+                  {category === "work" && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                </span>
+                <span>Work Experience</span>
+              </label>
+
+              <label
+                className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer text-xs font-medium transition-all ${
+                  category === "leadership"
+                    ? "bg-cyan-600/20 border-cyan-500 text-white shadow-md shadow-cyan-600/20"
+                    : "bg-dark-950 border-white/10 text-slate-400 hover:border-white/20"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="category"
+                  value="leadership"
+                  checked={category === "leadership"}
+                  onChange={() => setCategory("leadership")}
+                  className="hidden"
+                />
+                <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${category === "leadership" ? "border-cyan-400 bg-cyan-500" : "border-slate-500"}`}>
+                  {category === "leadership" && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                </span>
+                <span>Roles & Responsibilities</span>
+              </label>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">
@@ -141,7 +196,7 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
               <input
                 type="text"
                 required
-                placeholder="e.g. Virtusa, Salesforce"
+                placeholder="e.g. Virtusa, Salesforce, IngenuITy"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-dark-950 border border-white/10 text-xs text-slate-200 focus:outline-none focus:border-violet-500"
@@ -166,7 +221,7 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">
-                Employment Type
+                Employment / Role Type
               </label>
               <select
                 value={employmentType}
@@ -174,9 +229,10 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
                 className="w-full px-3.5 py-2.5 rounded-xl bg-dark-950 border border-white/10 text-xs text-slate-200 focus:outline-none focus:border-violet-500"
               >
                 <option value="Full-Time">Full-Time</option>
-                <option value="Internship">Internship</option>
-                <option value="Contract / Freelance">Contract / Freelance</option>
+                <option value="Internship">Internship / Virtual</option>
                 <option value="Student Leadership">Student Leadership</option>
+                <option value="Club Leadership">Club Leadership</option>
+                <option value="Contract / Freelance">Contract / Freelance</option>
               </select>
             </div>
 
@@ -216,7 +272,7 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
               className="w-4 h-4 rounded text-violet-600 bg-dark-950 border-white/20 focus:ring-violet-500"
             />
             <label htmlFor="current-role-checkbox" className="text-xs font-semibold text-emerald-400 cursor-pointer">
-              Mark as my Current Role (displays active indicator badge)
+              Mark as my Current Active Role (displays pulsing badge)
             </label>
           </div>
 
@@ -299,7 +355,7 @@ export default function EditExperienceModal({ isOpen, onClose, experienceToEdit 
               type="submit"
               className="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-md shadow-violet-600/30 transition-all"
             >
-              {experienceToEdit ? "Save Changes" : "Create Experience"}
+              {experienceToEdit ? "Save Changes" : "Create Entry"}
             </button>
           </div>
         </form>

@@ -1,9 +1,17 @@
+export const experienceCategories = [
+  { id: "all", label: "All Experiences" },
+  { id: "work", label: "Professional Experience (Virtusa)" },
+  { id: "leadership", label: "Roles & Responsibilities" }
+];
+
 export const experienceData = [
   {
     id: "virtusa-fullstack",
     company: "Virtusa",
     role: "Associate Engineer (Java Full Stack Developer)",
     employmentType: "Full-Time",
+    category: "work", // Explicit work experience
+    categoryLabel: "Work Experience",
     period: "2025 – Present",
     current: true,
     location: "Hyderabad, India",
@@ -41,6 +49,8 @@ export const experienceData = [
     company: "Salesforce / SmartInternz / AICTE",
     role: "Salesforce Developer Virtual Intern",
     employmentType: "Virtual Internship",
+    category: "leadership", // Roles & Responsibilities
+    categoryLabel: "Roles & Responsibilities",
     period: "Oct 2023 – Jan 2024",
     current: false,
     location: "Remote, India",
@@ -62,6 +72,8 @@ export const experienceData = [
     company: "IngenuITy (IT Department Student Body, CVRCE)",
     role: "Organizational Secretary & Lead Coordinator",
     employmentType: "Technical Leadership & Student Governance",
+    category: "leadership", // Roles & Responsibilities
+    categoryLabel: "Roles & Responsibilities",
     period: "2023 – 2025",
     current: false,
     location: "CVR College of Engineering, Hyderabad",
@@ -83,6 +95,8 @@ export const experienceData = [
     company: "Theatre Club, CVR College of Engineering",
     role: "Treasurer & Core Committee Member",
     employmentType: "Club Leadership & Financial Operations",
+    category: "leadership", // Roles & Responsibilities
+    categoryLabel: "Roles & Responsibilities",
     period: "2022 – 2024",
     current: false,
     location: "Hyderabad, Telangana",

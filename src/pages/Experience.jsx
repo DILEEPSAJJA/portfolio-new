@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Briefcase, Building2, CheckCircle2, Award, Sparkles, Plus } from "lucide-react";
+import { Briefcase, Users, Building2, CheckCircle2, Award, Sparkles, Plus, Star } from "lucide-react";
 import { usePortfolio } from "../context/PortfolioContext";
 import SectionHeading from "../components/SectionHeading";
 import ExperienceCard from "../components/ExperienceCard";
@@ -11,9 +11,10 @@ export default function Experience() {
   const { experience, isEditMode } = usePortfolio();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [activeTab, setActiveTab] = useState("all"); // "all", "work", "leadership"
 
   useEffect(() => {
-    document.title = "Experience & Work History | Dileep Sajja";
+    document.title = "Experience & Roles | Dileep Sajja";
   }, []);
 
   const handleOpenAdd = () => {
@@ -26,17 +27,26 @@ export default function Experience() {
     setModalOpen(true);
   };
 
+  // Segregate work experiences (Virtusa, corporate) from roles & responsibilities (Salesforce, IngenuITy, Theatre Club)
+  const workExperiences = experience.filter(
+    (item) => item.category === "work" || item.company?.toLowerCase().includes("virtusa")
+  );
+
+  const rolesAndResponsibilities = experience.filter(
+    (item) => item.category === "leadership" || !item.company?.toLowerCase().includes("virtusa")
+  );
+
   return (
     <PageTransition>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          badge="Professional Background"
-          title="Work Experience"
-          highlight="& Engineering Roles"
-          subtitle="A track record of engineering scalable Java microservices, cloud platforms, and impactful organizational leadership."
+          badge="Career Journey & Engagements"
+          title="Experience &"
+          highlight="Responsibilities"
+          subtitle="A structured overview distinguishing professional work experience at Virtusa from leadership roles, internships, and organizational responsibilities."
         />
 
-        {/* Action Header in Edit Mode */}
+        {/* Edit Mode Bar */}
         {isEditMode && (
           <div className="mb-8 p-4 rounded-2xl glass-panel border border-indigo-500/30 bg-dark-900/80 max-w-4xl mx-auto flex items-center justify-between">
             <div>
@@ -44,7 +54,7 @@ export default function Experience() {
                 Experience Management Active
               </h4>
               <p className="text-xs text-slate-400">
-                You can add new career experiences or edit existing roles in real-time.
+                You can add new roles, modify bullet points, or recategorize entries.
               </p>
             </div>
             <button
@@ -52,24 +62,113 @@ export default function Experience() {
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-md shadow-indigo-600/30 transition-all"
             >
               <Plus className="w-4 h-4" />
-              <span>Add Experience</span>
+              <span>Add Experience / Role</span>
             </button>
           </div>
         )}
 
-        {/* Experience List */}
-        <div className="space-y-8 max-w-4xl mx-auto">
-          {experience.map((exp, index) => (
-            <motion.div
-              key={exp.id}
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: index * 0.1 }}
-            >
-              <ExperienceCard experience={exp} onEdit={handleOpenEdit} />
-            </motion.div>
-          ))}
+        {/* View Switcher Pills */}
+        <div className="mb-12 flex items-center justify-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <button
+            onClick={() => setActiveTab("all")}
+            type="button"
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 ${
+              activeTab === "all"
+                ? "bg-violet-600 text-white shadow-md shadow-violet-600/30 border border-violet-400/30"
+                : "bg-dark-850/80 text-slate-400 hover:text-white hover:bg-dark-800 border border-white/5"
+            }`}
+          >
+            All Experiences & Roles
+          </button>
+          <button
+            onClick={() => setActiveTab("work")}
+            type="button"
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 ${
+              activeTab === "work"
+                ? "bg-violet-600 text-white shadow-md shadow-violet-600/30 border border-violet-400/30"
+                : "bg-dark-850/80 text-slate-400 hover:text-white hover:bg-dark-800 border border-white/5"
+            }`}
+          >
+            <Briefcase className="w-3.5 h-3.5 text-violet-300" />
+            <span>Work Experience ({workExperiences.length})</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("leadership")}
+            type="button"
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 ${
+              activeTab === "leadership"
+                ? "bg-violet-600 text-white shadow-md shadow-violet-600/30 border border-violet-400/30"
+                : "bg-dark-850/80 text-slate-400 hover:text-white hover:bg-dark-800 border border-white/5"
+            }`}
+          >
+            <Users className="w-3.5 h-3.5 text-cyan-300" />
+            <span>Roles & Responsibilities ({rolesAndResponsibilities.length})</span>
+          </button>
         </div>
+
+        {/* SECTION 1: WORK EXPERIENCE (VIRTUSA) */}
+        {(activeTab === "all" || activeTab === "work") && (
+          <section className="mb-14 max-w-4xl mx-auto">
+            <div className="flex items-center gap-3 mb-6 pb-3 border-b border-white/10">
+              <div className="p-2.5 rounded-xl bg-violet-600/10 border border-violet-500/20 text-violet-400">
+                <Briefcase className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="font-heading font-extrabold text-xl sm:text-2xl text-white">
+                  Professional Work Experience
+                </h2>
+                <p className="text-xs text-slate-400">
+                  Full-time corporate software engineering roles & enterprise application delivery
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {workExperiences.map((exp, index) => (
+                <motion.div
+                  key={exp.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  <ExperienceCard experience={exp} onEdit={handleOpenEdit} />
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* SECTION 2: ROLES & RESPONSIBILITIES */}
+        {(activeTab === "all" || activeTab === "leadership") && (
+          <section className="mb-14 max-w-4xl mx-auto">
+            <div className="flex items-center gap-3 mb-6 pb-3 border-b border-white/10">
+              <div className="p-2.5 rounded-xl bg-cyan-600/10 border border-cyan-500/20 text-cyan-400">
+                <Users className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="font-heading font-extrabold text-xl sm:text-2xl text-white">
+                  Roles & Responsibilities
+                </h2>
+                <p className="text-xs text-slate-400">
+                  Internships, departmental leadership, and organizational stewardship
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {rolesAndResponsibilities.map((exp, index) => (
+                <motion.div
+                  key={exp.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  <ExperienceCard experience={exp} onEdit={handleOpenEdit} />
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Value Proposition Callout */}
         <div className="mt-16 max-w-4xl mx-auto p-6 sm:p-8 rounded-2xl glass-panel border border-violet-500/20 bg-dark-900/60 flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -79,10 +178,10 @@ export default function Experience() {
             </div>
             <div>
               <h4 className="font-heading font-bold text-base text-white">
-                Ready for Engineering Impact
+                Engineering Leadership & Delivery
               </h4>
               <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                Combining 1 year of hands-on Java Full Stack & Microservice engineering at Virtusa with proven problem-solving rigor. Open to discussing engineering challenges.
+                Combining full-stack software expertise at Virtusa with active departmental leadership. Always open to discussing distributed architecture and high-impact engineering projects.
               </p>
             </div>
           </div>
