@@ -35,7 +35,7 @@ const skillCategoryIcons = {
 };
 
 export default function Profile() {
-  const { profile, isEditMode, deleteSkill } = usePortfolio();
+  const { profile, isEditMode, deleteSkill, openEmailModal } = usePortfolio();
   const [showAddress, setShowAddress] = useState(profile.location?.showSensitiveAddress || false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [addSkillOpen, setAddSkillOpen] = useState(false);
@@ -230,17 +230,14 @@ export default function Profile() {
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
 
-                <a
-                  href={`mailto:${(profile.email || "dileep.sajja03@gmail.com").replace(/^mailto:/, "")}?subject=Direct%20Inquiry%20from%20Portfolio`}
-                  onClick={(e) => {
-                    const clean = (profile.email || "dileep.sajja03@gmail.com").replace(/^mailto:/, "");
-                    window.location.href = `mailto:${clean}?subject=Direct%20Inquiry%20from%20Portfolio`;
-                  }}
+                <button
+                  type="button"
+                  onClick={openEmailModal}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 transition-all cursor-pointer"
                 >
                   <Mail className="w-4 h-4 text-violet-400" />
                   <span>Send Direct Email</span>
-                </a>
+                </button>
               </div>
             </div>
           </div>

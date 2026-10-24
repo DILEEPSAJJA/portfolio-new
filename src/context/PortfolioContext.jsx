@@ -33,7 +33,7 @@ export function PortfolioProvider({ children }) {
       if (parsed.socialLinks && parsed.socialLinks.codechef?.endsWith("/dileepsajja")) {
         parsed.socialLinks.codechef = initialProfileData.socialLinks.codechef;
       }
-      // Guarantee socialLinks.email and profile.email are valid mailto links and never point to GitHub
+      // Guarantee socialLinks.email and profile.email are valid and never point to GitHub or mailto that invokes wrong apps
       if (!parsed.email || parsed.email.includes("github.com")) {
         parsed.email = initialProfileData.email;
       }
@@ -43,15 +43,19 @@ export function PortfolioProvider({ children }) {
       if (
         !parsed.socialLinks.email || 
         parsed.socialLinks.email.includes("github.com") || 
-        !parsed.socialLinks.email.startsWith("mailto:")
+        parsed.socialLinks.email.startsWith("mailto:")
       ) {
-        parsed.socialLinks.email = `mailto:${parsed.email || initialProfileData.email}`;
+        parsed.socialLinks.email = initialProfileData.socialLinks.email;
       }
       return parsed;
     } catch (e) {
       return initialProfileData;
     }
   });
+
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const openEmailModal = () => setIsEmailModalOpen(true);
+  const closeEmailModal = () => setIsEmailModalOpen(false);
 
   const [experience, setExperience] = useState(() => {
     const saved = localStorage.getItem(`${STORAGE_KEY}_experience`);
@@ -275,7 +279,10 @@ export function PortfolioProvider({ children }) {
         deleteAchievement,
         addSkill,
         deleteSkill,
-        resetToDefaults
+        resetToDefaults,
+        isEmailModalOpen,
+        openEmailModal,
+        closeEmailModal
       }}
     >
       {children}

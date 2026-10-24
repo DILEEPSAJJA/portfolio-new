@@ -10,14 +10,14 @@ import {
 import { usePortfolio } from "../context/PortfolioContext";
 
 export default function SocialLinks({ variant = "simple", className = "" }) {
-  const { profile } = usePortfolio();
+  const { profile, openEmailModal } = usePortfolio();
   const { socialLinks = {} } = profile;
 
-  // Clean raw email and guarantee genuine mailto URI
-  const rawEmail = (profile.email || "dileep.sajja03@gmail.com")
+  // Clean raw email and provide direct Gmail web compose URL as primary fallback
+  const cleanEmail = (profile.email || "dileep.sajja03@gmail.com")
     .replace(/^mailto:/, "")
     .trim();
-  const emailMailtoUrl = `mailto:${rawEmail}?subject=Direct%20Inquiry%20from%20Portfolio`;
+  const gmailWebComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${cleanEmail}&su=Direct%20Inquiry%20from%20Portfolio`;
 
   const links = [
     {
@@ -62,7 +62,7 @@ export default function SocialLinks({ variant = "simple", className = "" }) {
     },
     {
       name: "Email",
-      url: emailMailtoUrl,
+      url: gmailWebComposeUrl,
       icon: Mail,
       color: "hover:text-violet-400 hover:border-violet-500/40 hover:bg-violet-500/10",
       badge: "Direct Contact",
@@ -72,9 +72,8 @@ export default function SocialLinks({ variant = "simple", className = "" }) {
 
   const handleLinkClick = (e, link) => {
     if (link.isEmail) {
-      // Prevent browser from opening blank tabs or navigating to current/previous URL
       e.preventDefault();
-      window.location.href = emailMailtoUrl;
+      openEmailModal();
     }
   };
 
@@ -87,8 +86,8 @@ export default function SocialLinks({ variant = "simple", className = "" }) {
             <a
               key={link.name}
               href={link.url}
-              target={link.isEmail ? undefined : "_blank"}
-              rel={link.isEmail ? undefined : "noopener noreferrer"}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={(e) => handleLinkClick(e, link)}
               className={`flex items-center justify-between p-4 rounded-xl border border-white/5 bg-dark-850/60 hover:bg-dark-800/80 transition-all duration-300 group cursor-pointer ${link.color}`}
             >
@@ -119,8 +118,8 @@ export default function SocialLinks({ variant = "simple", className = "" }) {
           <a
             key={link.name}
             href={link.url}
-            target={link.isEmail ? undefined : "_blank"}
-            rel={link.isEmail ? undefined : "noopener noreferrer"}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={(e) => handleLinkClick(e, link)}
             title={link.name}
             aria-label={link.name}

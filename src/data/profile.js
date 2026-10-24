@@ -42,7 +42,7 @@ export const profileData = {
     leetcode: "https://leetcode.com/u/DILEEPSAJJA/",
     hackerrank: "https://www.hackerrank.com/profile/sajjadileep2003",
     codechef: "https://www.codechef.com/users/dileepsajja_02",
-    email: "mailto:dileep.sajja03@gmail.com"
+    email: "https://mail.google.com/mail/?view=cm&fs=1&to=dileep.sajja03@gmail.com&su=Direct%20Inquiry%20from%20Portfolio"
   },
   skillCategories: [
     {

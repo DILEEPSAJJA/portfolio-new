@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import FloatingElements from "../components/FloatingElements";
 import ScrollToTop from "../components/ScrollToTop";
 import EditorToolbar from "../components/editor/EditorToolbar";
+import EmailModal from "../components/EmailModal";
 
 export default function MainLayout() {
   return (
@@ -25,6 +26,9 @@ export default function MainLayout() {
 
       {/* Floating live editor toolbar when in edit mode */}
       <EditorToolbar />
+
+      {/* Global Email Contact Modal */}
+      <EmailModal />
 
       {/* Shared Footer */}
       <Footer />

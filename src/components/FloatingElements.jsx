@@ -5,7 +5,7 @@ import { usePortfolio } from "../context/PortfolioContext";
 
 export default function FloatingElements() {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const { profile } = usePortfolio();
+  const { profile, openEmailModal } = usePortfolio();
   const { status, email } = profile;
 
   useEffect(() => {
@@ -55,9 +55,10 @@ export default function FloatingElements() {
           aria-label="Availability Status"
           className="fixed bottom-6 left-6 z-40 hidden md:block"
         >
-          <a
-            href={`mailto:${email}?subject=Opportunity%20Inquiry%20via%20Portfolio`}
-            className="group flex items-center gap-2.5 px-3.5 py-2 rounded-full glass-panel border border-emerald-500/20 hover:border-emerald-500/40 bg-dark-900/90 shadow-lg shadow-black/40 text-xs font-medium text-slate-300 hover:text-white transition-all duration-300 transform hover:-translate-y-0.5"
+          <button
+            type="button"
+            onClick={openEmailModal}
+            className="group flex items-center gap-2.5 px-3.5 py-2 rounded-full glass-panel border border-emerald-500/20 hover:border-emerald-500/40 bg-dark-900/90 shadow-lg shadow-black/40 text-xs font-medium text-slate-300 hover:text-white transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
             title="Click to send an email inquiry"
           >
             <span className="relative flex h-2 w-2">
@@ -68,7 +69,7 @@ export default function FloatingElements() {
               {status.label}
             </span>
             <Send className="w-3 h-3 text-slate-400 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
-          </a>
+          </button>
         </aside>
       )}
 

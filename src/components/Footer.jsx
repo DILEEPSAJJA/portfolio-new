@@ -6,7 +6,7 @@ import SocialLinks from "./SocialLinks";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const { profile } = usePortfolio();
+  const { profile, openEmailModal } = usePortfolio();
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -44,13 +44,14 @@ export default function Footer() {
             </p>
 
             <div className="flex flex-col gap-2 pt-2 text-xs text-slate-400">
-              <a 
-                href={`mailto:${profile.email}`}
-                className="inline-flex items-center gap-2 hover:text-violet-300 transition-colors"
+              <button 
+                type="button"
+                onClick={openEmailModal}
+                className="inline-flex items-center gap-2 hover:text-violet-300 transition-colors text-left cursor-pointer"
               >
                 <Mail className="w-3.5 h-3.5 text-violet-400" />
                 <span>{profile.email}</span>
-              </a>
+              </button>
               <div className="inline-flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-cyan-400" />
                 <span>{profile.location.city}, {profile.location.country}</span>

@@ -8,7 +8,7 @@ import PageTransition from "../components/PageTransition";
 import EditExperienceModal from "../components/editor/EditExperienceModal";
 
 export default function Experience() {
-  const { experience, isEditMode } = usePortfolio();
+  const { experience, isEditMode, openEmailModal } = usePortfolio();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [activeTab, setActiveTab] = useState("all"); // "all", "work", "leadership"
@@ -186,12 +186,13 @@ export default function Experience() {
             </div>
           </div>
 
-          <a
-            href="mailto:dileep.sajja03@gmail.com?subject=Engineering%20Role%20Inquiry"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-lg shadow-violet-600/25 transition-all whitespace-nowrap"
+          <button
+            type="button"
+            onClick={openEmailModal}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-lg shadow-violet-600/25 transition-all whitespace-nowrap cursor-pointer"
           >
             <span>Get in Touch</span>
-          </a>
+          </button>
         </div>
       </div>
 
