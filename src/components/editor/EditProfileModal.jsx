@@ -90,7 +90,7 @@ export default function EditProfileModal({ isOpen, onClose, initialTab = "basic"
         hackerrank: hackerrank.trim(),
         github: github.trim(),
         linkedin: linkedin.trim(),
-        email: `mailto:${email.trim()}`
+        email: `mailto:${(email.trim() || "dileep.sajja03@gmail.com").replace(/^mailto:/, "")}`
       }
     });
 

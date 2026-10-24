@@ -33,6 +33,20 @@ export function PortfolioProvider({ children }) {
       if (parsed.socialLinks && parsed.socialLinks.codechef?.endsWith("/dileepsajja")) {
         parsed.socialLinks.codechef = initialProfileData.socialLinks.codechef;
       }
+      // Guarantee socialLinks.email and profile.email are valid mailto links and never point to GitHub
+      if (!parsed.email || parsed.email.includes("github.com")) {
+        parsed.email = initialProfileData.email;
+      }
+      if (!parsed.socialLinks) {
+        parsed.socialLinks = { ...initialProfileData.socialLinks };
+      }
+      if (
+        !parsed.socialLinks.email || 
+        parsed.socialLinks.email.includes("github.com") || 
+        !parsed.socialLinks.email.startsWith("mailto:")
+      ) {
+        parsed.socialLinks.email = `mailto:${parsed.email || initialProfileData.email}`;
+      }
       return parsed;
     } catch (e) {
       return initialProfileData;
