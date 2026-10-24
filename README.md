@@ -1,6 +1,6 @@
 # Premium Multi-Page Developer Portfolio
 
-A modern, production-grade personal portfolio website for **Dileep Sajja (Sajja Bala Naga Babji)** built with **React**, **Vite**, **Tailwind CSS**, **React Router DOM**, **Framer Motion**, and **Lucide React**.
+A modern, production-grade personal portfolio website for **SAJJA DILEEP** built with **React**, **Vite**, **Tailwind CSS**, **React Router DOM**, **Framer Motion**, and **Lucide React**.
 
 ## 🌟 Highlights & Features
 

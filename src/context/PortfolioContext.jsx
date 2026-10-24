@@ -21,7 +21,22 @@ export function PortfolioProvider({ children }) {
 
   const [profile, setProfile] = useState(() => {
     const saved = localStorage.getItem(`${STORAGE_KEY}_profile`);
-    return saved ? JSON.parse(saved) : initialProfileData;
+    if (!saved) return initialProfileData;
+    try {
+      const parsed = JSON.parse(saved);
+      // Automatically patch old name & CodeChef if present from previous sessions
+      if (parsed.fullName && (parsed.fullName.includes("Babji") || parsed.fullName.includes("Bala"))) {
+        parsed.fullName = initialProfileData.fullName;
+        parsed.name = initialProfileData.name;
+        parsed.initials = initialProfileData.initials;
+      }
+      if (parsed.socialLinks && parsed.socialLinks.codechef?.endsWith("/dileepsajja")) {
+        parsed.socialLinks.codechef = initialProfileData.socialLinks.codechef;
+      }
+      return parsed;
+    } catch (e) {
+      return initialProfileData;
+    }
   });
 
   const [experience, setExperience] = useState(() => {
@@ -197,7 +212,10 @@ export function PortfolioProvider({ children }) {
   const updateProfile = (fields) => {
     setProfile((prev) => ({
       ...prev,
-      ...fields
+      ...fields,
+      status: fields.status ? { ...prev.status, ...fields.status } : prev.status,
+      location: fields.location ? { ...prev.location, ...fields.location } : prev.location,
+      socialLinks: fields.socialLinks ? { ...prev.socialLinks, ...fields.socialLinks } : prev.socialLinks
     }));
   };
 

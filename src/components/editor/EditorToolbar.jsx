@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { Edit3, Plus, Upload, Briefcase, Trophy, RotateCcw, LogOut, CheckCircle } from "lucide-react";
+import { Edit3, Plus, Upload, Briefcase, Trophy, User, RotateCcw, LogOut, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePortfolio } from "../../context/PortfolioContext";
 import AddSkillModal from "./AddSkillModal";
 import AddCertificateModal from "./AddCertificateModal";
 import EditExperienceModal from "./EditExperienceModal";
 import EditAchievementModal from "./EditAchievementModal";
+import EditProfileModal from "./EditProfileModal";
 
 export default function EditorToolbar() {
   const { isEditMode, exitEditMode, resetToDefaults } = usePortfolio();
 
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [skillModalOpen, setSkillModalOpen] = useState(false);
   const [certModalOpen, setCertModalOpen] = useState(false);
   const [expModalOpen, setExpModalOpen] = useState(false);
@@ -20,7 +22,7 @@ export default function EditorToolbar() {
   return (
     <>
       {/* Floating Bottom Admin Editor Bar */}
-      <aside aria-label="Portfolio Editor Controls" className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-3xl px-4 pointer-events-none">
+      <aside aria-label="Portfolio Editor Controls" className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-4 pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -38,6 +40,15 @@ export default function EditorToolbar() {
           </div>
 
           <div className="flex items-center gap-1.5 flex-wrap">
+            <button
+              onClick={() => setProfileModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-200 border border-emerald-500/30 transition-all hover:scale-102"
+              title="Edit profile & coding handles"
+            >
+              <User className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Profile</span>
+            </button>
+
             <button
               onClick={() => setSkillModalOpen(true)}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-violet-600/20 hover:bg-violet-600/30 text-violet-200 border border-violet-500/30 transition-all hover:scale-102"
@@ -95,6 +106,11 @@ export default function EditorToolbar() {
       </aside>
 
       {/* Editor Dialogs */}
+      <EditProfileModal
+        isOpen={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+      />
+
       <AddSkillModal
         isOpen={skillModalOpen}
         onClose={() => setSkillModalOpen(false)}

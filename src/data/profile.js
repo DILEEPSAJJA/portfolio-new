@@ -1,7 +1,7 @@
 export const profileData = {
-  name: "Dileep Sajja",
-  fullName: "Sajja Bala Naga Babji (Dileep)",
-  initials: "DS",
+  name: "SAJJA DILEEP",
+  fullName: "SAJJA DILEEP",
+  initials: "SD",
   title: "Software Engineer & Java Full Stack Developer",
   status: {
     available: true,
@@ -41,7 +41,7 @@ export const profileData = {
     github: "https://github.com/DILEEPSAJJA",
     leetcode: "https://leetcode.com/u/DILEEPSAJJA/",
     hackerrank: "https://www.hackerrank.com/profile/sajjadileep2003",
-    codechef: "https://www.codechef.com/users/dileepsajja",
+    codechef: "https://www.codechef.com/users/dileepsajja_02",
     email: "mailto:dileep.sajja03@gmail.com"
   },
   skillCategories: [

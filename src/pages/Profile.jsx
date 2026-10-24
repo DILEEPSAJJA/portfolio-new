@@ -25,6 +25,7 @@ import SectionHeading from "../components/SectionHeading";
 import SocialLinks from "../components/SocialLinks";
 import PageTransition from "../components/PageTransition";
 import AddSkillModal from "../components/editor/AddSkillModal";
+import EditProfileModal from "../components/editor/EditProfileModal";
 
 const skillCategoryIcons = {
   Code2: Code2,
@@ -35,9 +36,11 @@ const skillCategoryIcons = {
 
 export default function Profile() {
   const { profile, isEditMode, deleteSkill } = usePortfolio();
-  const [showAddress, setShowAddress] = useState(profile.location.showSensitiveAddress);
+  const [showAddress, setShowAddress] = useState(profile.location?.showSensitiveAddress || false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [addSkillOpen, setAddSkillOpen] = useState(false);
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
+  const [profileModalTab, setProfileModalTab] = useState("basic");
 
   useEffect(() => {
     document.title = `Profile & Skills | ${profile.name}`;
@@ -47,6 +50,11 @@ export default function Profile() {
     navigator.clipboard.writeText(profile.email);
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2500);
+  };
+
+  const handleOpenEditProfile = (tab = "basic") => {
+    setProfileModalTab(tab);
+    setEditProfileOpen(true);
   };
 
   return (
@@ -59,6 +67,43 @@ export default function Profile() {
           subtitle="A comprehensive overview of my technical specializations, professional background, coding profiles, and contact channels."
         />
 
+        {/* Edit Mode Top Action Bar */}
+        {isEditMode && (
+          <div className="mb-8 p-4 rounded-2xl glass-panel border border-violet-500/30 bg-dark-900/80 max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h4 className="text-sm font-bold text-violet-300 font-heading">
+                Profile Management Active
+              </h4>
+              <p className="text-xs text-slate-400">
+                You can edit personal info, bio, contact channels, coding handles, or technical skills in real-time.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <button
+                onClick={() => handleOpenEditProfile("basic")}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-violet-600/20 hover:bg-violet-600/30 text-violet-200 border border-violet-500/30 transition-all"
+              >
+                <Edit3 className="w-3.5 h-3.5 text-violet-400" />
+                <span>Edit Profile</span>
+              </button>
+              <button
+                onClick={() => handleOpenEditProfile("socials")}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-orange-600/20 hover:bg-orange-600/30 text-orange-200 border border-orange-500/30 transition-all"
+              >
+                <Globe className="w-3.5 h-3.5 text-orange-400" />
+                <span>Edit Handles</span>
+              </button>
+              <button
+                onClick={() => setAddSkillOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-md shadow-violet-600/30 transition-all"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add Skill</span>
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Top Profile Summary Card */}
         <div className="glass-card rounded-3xl p-6 sm:p-10 border border-white/10 mb-12 relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-500" />
@@ -69,7 +114,7 @@ export default function Profile() {
               <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden border-2 border-violet-500/40 p-1 bg-gradient-to-tr from-violet-600 via-indigo-500 to-cyan-400 shadow-xl shadow-violet-950/30">
                 <img
                   src={profile.heroImage}
-                  alt={profile.fullName}
+                  alt={profile.fullName || profile.name}
                   className="w-full h-full object-cover object-top rounded-xl"
                 />
               </div>
@@ -83,16 +128,31 @@ export default function Profile() {
 
             {/* Profile Info */}
             <div className="flex-1 text-center lg:text-left space-y-4">
-              <div>
-                <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white">
-                  {profile.fullName}
-                </h2>
-                <p className="text-sm sm:text-base font-semibold text-cyan-400 mt-1">
-                  {profile.title}
-                </p>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Known professionally as <span className="text-slate-200">{profile.name}</span>
-                </p>
+              <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
+                <div>
+                  <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
+                    {profile.fullName || profile.name}
+                  </h2>
+                  <p className="text-sm sm:text-base font-semibold text-cyan-400 mt-1">
+                    {profile.title}
+                  </p>
+                  {profile.status?.label && (
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {profile.status.label}
+                    </p>
+                  )}
+                </div>
+
+                {/* Edit Button in Card */}
+                {isEditMode && (
+                  <button
+                    onClick={() => handleOpenEditProfile("basic")}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-violet-600/20 hover:bg-violet-600/30 text-violet-300 border border-violet-500/30 transition-all self-center lg:self-start"
+                  >
+                    <Edit3 className="w-3.5 h-3.5" />
+                    <span>Edit Profile</span>
+                  </button>
+                )}
               </div>
 
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
@@ -127,9 +187,9 @@ export default function Profile() {
                     <MapPin className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5 sm:mt-0" />
                     <div>
                       <span className="font-medium text-white">
-                        {profile.location.city}, {profile.location.state}, {profile.location.country}
+                        {profile.location?.city}, {profile.location?.state}, {profile.location?.country}
                       </span>
-                      {showAddress && (
+                      {showAddress && profile.location?.collegeCampus && (
                         <p className="text-[11px] text-slate-400 mt-0.5">
                           Academic Base: {profile.location.collegeCampus}
                         </p>
@@ -184,14 +244,28 @@ export default function Profile() {
 
         {/* Coding Handles & Online Verification Profiles */}
         <section className="mb-14">
-          <div className="mb-6">
-            <h3 className="font-heading text-xl font-bold text-white flex items-center gap-2">
-              <Globe className="w-5 h-5 text-violet-400" />
-              <span>Verified Developer & Competitive Profiles</span>
-            </h3>
-            <p className="text-xs text-slate-400 mt-1">
-              Active profiles across professional networking, source code management, and algorithmic problem-solving platforms.
-            </p>
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 className="font-heading text-xl font-bold text-white flex items-center gap-2">
+                <Globe className="w-5 h-5 text-violet-400" />
+                <span>Verified Developer & Competitive Profiles</span>
+              </h3>
+              <p className="text-xs text-slate-400 mt-1">
+                Active profiles across professional networking, source code management, and algorithmic problem-solving platforms.
+              </p>
+            </div>
+
+            {/* Edit handles shortcut in edit mode */}
+            {isEditMode && (
+              <button
+                type="button"
+                onClick={() => handleOpenEditProfile("socials")}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-orange-600/20 hover:bg-orange-600/30 text-orange-300 border border-orange-500/30 transition-colors self-start sm:self-auto"
+              >
+                <Edit3 className="w-3.5 h-3.5" />
+                <span>Edit Handles & Links</span>
+              </button>
+            )}
           </div>
 
           <SocialLinks variant="cards" />
@@ -315,7 +389,7 @@ export default function Profile() {
             <div className="mt-4 pt-3 border-t border-white/5">
               <span className="text-xs font-semibold text-slate-400">Current Status:</span>
               <p className="text-xs text-emerald-400 font-medium mt-0.5">
-                {profile.status.subtext}
+                {profile.status?.subtext}
               </p>
             </div>
           </div>
@@ -325,6 +399,12 @@ export default function Profile() {
       <AddSkillModal
         isOpen={addSkillOpen}
         onClose={() => setAddSkillOpen(false)}
+      />
+
+      <EditProfileModal
+        isOpen={editProfileOpen}
+        onClose={() => setEditProfileOpen(false)}
+        initialTab={profileModalTab}
       />
     </PageTransition>
   );
